@@ -1,6 +1,7 @@
 <template>
-	<div>
+	<div class="content">
 		<Navbar/>
+		Home
 		
 	</div>
 </template>

@@ -1,6 +1,8 @@
 <template>
-  <div>
+  <div class="content">
     <Navbar/>
+    Mylist
+    
   </div>
 </template>
 
