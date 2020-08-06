@@ -1,0 +1,128 @@
+{
+  "id": "1953462",
+  "name": "Tmusic",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "6255838",
+      "name": "SQ",
+      "font_class": "sq",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "14313162",
+      "name": "关闭",
+      "font_class": "guanbi",
+      "unicode": "e60c",
+      "unicode_decimal": 58892
+    },
+    {
+      "icon_id": "6590999",
+      "name": "循环",
+      "font_class": "xunhuan",
+      "unicode": "e676",
+      "unicode_decimal": 58998
+    },
+    {
+      "icon_id": "8852641",
+      "name": "单曲循环",
+      "font_class": "play-circle-single",
+      "unicode": "e618",
+      "unicode_decimal": 58904
+    },
+    {
+      "icon_id": "11139793",
+      "name": "随机循环",
+      "font_class": "suijixunhuan",
+      "unicode": "e610",
+      "unicode_decimal": 58896
+    },
+    {
+      "icon_id": "11391498",
+      "name": "歌单",
+      "font_class": "gedan",
+      "unicode": "e636",
+      "unicode_decimal": 58934
+    },
+    {
+      "icon_id": "16008743",
+      "name": "上一曲",
+      "font_class": "next",
+      "unicode": "e8ce",
+      "unicode_decimal": 59598
+    },
+    {
+      "icon_id": "16008745",
+      "name": "上一曲",
+      "font_class": "prev",
+      "unicode": "e8cf",
+      "unicode_decimal": 59599
+    },
+    {
+      "icon_id": "16008746",
+      "name": "开始",
+      "font_class": "stop",
+      "unicode": "e8d0",
+      "unicode_decimal": 59600
+    },
+    {
+      "icon_id": "16008747",
+      "name": "开始",
+      "font_class": "start",
+      "unicode": "e8d1",
+      "unicode_decimal": 59601
+    },
+    {
+      "icon_id": "11372659",
+      "name": "更多",
+      "font_class": "gengduo",
+      "unicode": "e8b7",
+      "unicode_decimal": 59575
+    },
+    {
+      "icon_id": "11372680",
+      "name": "排行榜",
+      "font_class": "paihangbang",
+      "unicode": "e8bc",
+      "unicode_decimal": 59580
+    },
+    {
+      "icon_id": "11372706",
+      "name": "搜索",
+      "font_class": "sousuo",
+      "unicode": "e8c6",
+      "unicode_decimal": 59590
+    },
+    {
+      "icon_id": "11372732",
+      "name": "演出",
+      "font_class": "yanchu",
+      "unicode": "e8cd",
+      "unicode_decimal": 59597
+    },
+    {
+      "icon_id": "14313161",
+      "name": "回退",
+      "font_class": "huitui",
+      "unicode": "e60b",
+      "unicode_decimal": 58891
+    },
+    {
+      "icon_id": "4630956",
+      "name": "播放器_歌词_24",
+      "font_class": "lyric",
+      "unicode": "e675",
+      "unicode_decimal": 58997
+    },
+    {
+      "icon_id": "13338914",
+      "name": "音乐",
+      "font_class": "yinle",
+      "unicode": "e60f",
+      "unicode_decimal": 58895
+    }
+  ]
+}
