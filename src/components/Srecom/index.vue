@@ -61,8 +61,10 @@
 		margin-left: 10px;
 		padding-right: 10px;
 		font-size: 15px;
+		font-weight: 400;
 		line-height: 50px;
 		color: #507daf;
+		border-bottom: .5px solid rgba(0,0,0,.1);
 	}
 
 	.s-recom .recomitem {

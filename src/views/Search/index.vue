@@ -2,16 +2,18 @@
 	<div class="content">
 		<Navbar/>
 		<div class="m-hmsrch">
-			<form class="m-input" action="#" method="get">
+			<form class="m-input" action="javascript:void 0" method="get">
 				<div class="inputcover">
 					<i class="iconfont icon-sousuo seaico sousuo"></i>
 					<input name="search" class="input" type="search" placeholder="搜索歌曲、歌手、专辑" v-model="inputText" value=""
-					 autocomplete="off">
+					 autocomplete="off" @keyup.13="tapToSearch">
 					<i class="iconfont icon-guanbi seaico close"></i>
 				</div>
 			</form>
 			<Shotlist v-show="showhot"/>
 			<Srecom v-show="showrec" :intext="inputText" />
+			<Songlist v-show="showlis" :intext="inputText" />
+
 		</div>
 	</div>
 </template>
@@ -20,6 +22,7 @@
 	import Navbar from "@/components/Navbar";
 	import Shotlist from "@/components/Shotlist";
 	import Srecom from "@/components/Srecom";
+	import Songlist from "@/components/Songlist";
 	export default {
 		name: 'Search',
 		props: [''],
@@ -28,30 +31,47 @@
 				showhot:true,
 				showrec:false,
 				showlis:false,
-				inputText:[]
+				inputText:''
 			};
 		},
 
 		components: {
-			Navbar,Shotlist,Srecom
+			Navbar,Shotlist,Srecom,Songlist
 		},
 
 		computed: {},
 
 		beforeMount() {},
 
-		mounted() {},
+		mounted() {
+			document.getElementsByClassName("close")[0].addEventListener("touchend",this.clearinput);
+		},
 
-		methods: {},
+		methods: {
+			clearinput(){
+				this.inputText='';
+			},
+			tapToSearch(){
+      		this.showhot=false;
+					this.showrec=false;
+					this.showlis=true;
+					document.activeElement.blur();  
+			}
+		
+		},
 
 		watch: {
 			inputText(value){
 				if(value==""){
 					this.showhot=true;
 					this.showrec=false;
+					this.showlis=false;
+					document.getElementsByClassName("close")[0].style.display="none"
 				}else{
 					this.showhot=false;
 					this.showrec=true;
+					this.showlis=false;
+					document.getElementsByClassName("close")[0].style.display="block"
 				}
 			}
 		}
@@ -98,7 +118,7 @@
 
 	.close {
 		right: 0;
-		display: inline-block;
+		display: none;
 		font-size: 9px;
 		font-weight: bold;
 		width: 14px;

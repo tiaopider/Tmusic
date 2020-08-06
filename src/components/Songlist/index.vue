@@ -3,11 +3,10 @@
 		<a class="m-sgitem" v-for="song in songlist" :key="song.id" href="//music.163.com/m/song?id=1467189463">
 			<div class="sgfr ">
 				<div class="sgchfl">
-					<div class="f-thide sgtl">{{song.name}}<span class="sgalia">{{song.song.alias[0]}}</span></div>
+					<div class="f-thide sgtl">{{song.name}}<span class="sgalia">{{song.alias[0]}}</span></div>
 					<div class="f-thide sginfo">
-            <i class="iconfont icon-sq"></i>
-            <span v-for="anm in song.song.artists" :key="anm.id">{{anm.name}}/</span> - {{song.song.album.name}}
-            
+            <i class="iconfont icon-sq" v-show="!song.fee==0"></i>
+            <span v-for="anm in song.artists" :key="anm.id">{{anm.name}}/</span> - {{song.album.name}}
           </div>
 				</div>
 				<div class="sgchfr"><i class="iconfont icon-start"></i></div>
@@ -19,16 +18,10 @@
 <script>
 
 	export default {
-		name:'NewSonglist',
-		props:{
-			'apiurl':String,
-			'intext':String
-		},
+		name:'Songlist',
+		props:["intext"],
 		data () {
 			return {
-				// api_url:this.apiurl,
-				// kword:this.stext,
-				// keyword:"",
 				songlist: []
 			};
 		},
@@ -40,19 +33,29 @@
 		beforeMount() {},
 
 		mounted() {
-		this.$axios.get(this.apiurl, {
-				params: {	}
-			}).then((res) => {
-				if (res.status == 200 && res.statusText === "OK") {
-					this.songlist = res.data.result;
-					console.log(this.songlist);
-				}
-    	})
+			
+		
 		},
 
 		methods: {},
 
-		watch: {}
+		watch: {
+			intext(value){
+				if(!value==""){
+				this.$axios.get('/api/search', {
+					params: {
+						keywords:value
+					}
+				}).then((res) => {
+					if (res.status == 200 && res.statusText === "OK") {
+						this.songlist = res.data.result.songs;
+						// console.log(this.songlist);
+					}
+    		})
+			}
+		}
+			}
+			
 
 	}
 
@@ -76,7 +79,8 @@
   box-sizing: border-box;
 }
 .m-sgitem .sgchfl {
-    padding: 6px 0;
+		padding: 6px 0;
+		width: 85vw;
 }
 .f-thide {
     overflow: hidden;
@@ -90,12 +94,15 @@
 .m-sgitem .sginfo {
     font-size: 12px;
     color: #888;
-		display: flex;
-		align-items: center;
+		overflow: hidden;
+		text-overflow:ellipsis;
+		white-space: nowrap;
+		padding: 1px 0;
+		box-sizing: border-box;
 }
 .m-sgitem .sginfo i{
     font-size: 18px;
-    color: #ff6700;
+		color: #ff6700;
 }
 .m-sgitem .sgalia {
     color: #888;

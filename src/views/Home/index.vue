@@ -226,8 +226,9 @@
 .m-sgitem .sginfo {
     font-size: 12px;
     color: #888;
-		display: flex;
-		align-items: center;
+		overflow: hidden;
+		text-overflow:ellipsis;
+		white-space: nowrap;
 }
 .m-sgitem .sginfo i{
     font-size: 18px;
