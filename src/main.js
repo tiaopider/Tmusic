@@ -6,6 +6,9 @@ import store from './store'
 import Axios from 'axios'
 Vue.prototype.$axios=Axios
 
+import Loading from '@/components/Loading'
+Vue.component('Loading',Loading)
+
 Vue.config.productionTip = false
 
 new Vue({

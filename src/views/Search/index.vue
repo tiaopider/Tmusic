@@ -1,5 +1,5 @@
 <template>
-	<div class="content">
+	<div class="content ">
 		<Navbar/>
 		<div class="m-hmsrch">
 			<form class="m-input" action="javascript:void 0" method="get">
@@ -13,7 +13,6 @@
 			<Shotlist v-show="showhot"/>
 			<Srecom v-show="showrec" :intext="inputText" />
 			<Songlist v-show="showlis" :intext="inputText" />
-
 		</div>
 	</div>
 </template>

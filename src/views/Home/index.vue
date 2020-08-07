@@ -3,6 +3,7 @@
 		<Navbar/>
 		<div class="m-homeremd">
 			<h2 class="remd_tl">推荐歌单</h2>
+				<Loading v-if="isloading1"/>
 				<div class="remd_ul clearfix">
 					<a class="remd_li" v-for="list in playlists" :key="list.id" href="//y.music.163.com/m/playlist?id=924680166">
 						<div class="remd_img"><img :src="list.picUrl" class="u-img"><span class="u-earp remd_lnum">{{numberFormat(list.playCount)}}</span></div>
@@ -10,6 +11,7 @@
 					</a>
 				</div>
 			<h2 class="remd_tl">最新音乐</h2>
+			<Loading v-if="isloading2"/>
 			<div class="songlist">
 				<a class="m-sgitem" v-for="song in songlist" :key="song.id" href="//music.163.com/m/song?id=1467189463">
 					<div class="sgfr ">
@@ -36,6 +38,8 @@
 		props: [''],
 		data() {
 			return {
+				isloading1:true,
+				isloading2:true,
 				playlists: [],
 				songlist: []
 			};
@@ -57,6 +61,7 @@
 			}).then((res) => {
 				if (res.status == 200 && res.statusText === "OK") {
 					this.playlists = res.data.result;
+					this.isloading1=false;
 				}
       })
       ///////////////////////////////////
@@ -65,6 +70,7 @@
 			}).then((res) => {
 				if (res.status == 200 && res.statusText === "OK") {
 					this.songlist = res.data.result;
+					this.isloading2=false;
 				}
     	})
 		},
@@ -94,14 +100,6 @@
 	}
 </script>
 <style scoped>
-#home-body {
-		width: 100%;
-		height: 100vh;
-		padding: 45px 0 65px;
-		box-sizing: border-box;
-		overflow-y: auto;
-	}
-
 	.m-homeremd {
 		padding-top: 20px;
 	}
