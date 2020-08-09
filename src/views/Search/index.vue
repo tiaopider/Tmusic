@@ -13,6 +13,7 @@
 			<Shotlist v-show="showhot" />
 			<Srecom v-show="showrec" :intext="inputText" />
 			<Songlist v-show="showlis" :intext="inputText" />
+			<Playlist/>
 		</div>
 	</div>
 </template>
@@ -22,6 +23,7 @@
 	import Shotlist from "@/components/Shotlist";
 	import Srecom from "@/components/Srecom";
 	import Songlist from "@/components/Songlist";
+	import Playlist from "@/components/Playlist";
 	export default {
 		name: 'Search',
 		props: [''],
@@ -35,7 +37,7 @@
 		},
 
 		components: {
-			Navbar,Shotlist,Srecom,Songlist
+			Navbar,Shotlist,Srecom,Songlist,Playlist
 		},
 
 		computed: {},
