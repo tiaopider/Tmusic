@@ -1,6 +1,7 @@
 <template>
 	<section class="s-recom">
 		<h3 class="title">搜索“{{this.intext}}”</h3>
+		<Loading v-if="isloading"/>
 		<ul>
 			<li class="recomitem" v-for="rec in recomlist" :key="rec.keyword">
 				<i class="iconfont icon-sousuo"></i><span class="s-thide">{{rec.keyword}}</span>
@@ -16,6 +17,7 @@
 		,
 		data() {
 			return {
+				isloading:true,
 				recomlist: []
 			};
 		},
@@ -43,6 +45,7 @@
 					}).then((res) => {
 						if (res.status == 200 && res.statusText === "OK") {
 							this.recomlist = res.data.result.allMatch;
+							this.isloading=false;
 						}
 					})
 				}

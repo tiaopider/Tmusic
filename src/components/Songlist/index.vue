@@ -1,5 +1,6 @@
 <template>
 	<div class="songlist">
+		<Loading v-if="isloading"/>
 		<a class="m-sgitem" v-for="song in songlist" :key="song.id" href="//music.163.com/m/song?id=1467189463">
 			<div class="sgfr ">
 				<div class="sgchfl">
@@ -22,6 +23,7 @@
 		props:["intext"],
 		data () {
 			return {
+				isloading:true,
 				songlist: []
 			};
 		},
@@ -49,7 +51,7 @@
 				}).then((res) => {
 					if (res.status == 200 && res.statusText === "OK") {
 						this.songlist = res.data.result.songs;
-						// console.log(this.songlist);
+						this.isloading=false;
 					}
     		})
 			}

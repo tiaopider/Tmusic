@@ -1,8 +1,8 @@
 <template>
-	<section class="s-hotlist">
-		<h3 class="title">热门搜索</h3>
+	<section class="s-hotlist" v-if="isloading">
+		<h3 class="title" id="gg">热门搜索</h3>
 		<ul class="list">
-			<li class="item" v-for="hot in hotlist" :key="hot.first"><a class="link" href="javascript:void(0);">{{hot.first}}</a></li>
+			<li class="hotitem" v-for="hot in hotlist" :key="hot.first" ><a class="link" href="javascript:void(0);">{{hot.first}}</a></li>
 		</ul>
 	</section>
 </template>
@@ -10,10 +10,12 @@
 <script>
 	export default {
 		name: 'Shotlist',
-		props: {},
+		props: { },
 		data() {
 			return {
-				hotlist: []
+				isloading:false,
+				hotlist: [],
+				hotitems:[]
 			};
 		},
 
@@ -24,16 +26,34 @@
 		beforeMount() {},
 
 		mounted() {
+			// this.$emit('success',false);
+
+
+			// document.getElementsByClassName("hotitem")[0].addEventListener("touchend",this.tosearch);
+			// this.hotitems=document.getElementsByClassName("hotitem");
+			// for(itm in this.hotitems.length){
+			// 		this.hotitems[itm].touched(this.tapToSearch(itm));
+			// 	}
+
 			this.$axios.get("/api/search/hot", {
 				params: {}
 			}).then((res) => {
 				if (res.status == 200 && res.statusText === "OK") {
 					this.hotlist = res.data.result.hots;
+					this.isloading=true;
 				}
 			})
 		},
 
-		methods: {},
+		methods: {
+			
+			tosearch(){
+				// for(itm in this.hotitems.length){
+				// 	console.log(this.hotlist[itm]);
+				// }
+				console.log("嘿嘿");
+			}
+		},
 
 		watch: {}
 
@@ -52,7 +72,7 @@
 	.s-hotlist .list {
 	    margin: 10px 0 7px;
 	}
-	.s-hotlist .item {
+	.s-hotlist .hotitem {
 			display: inline-block;
 			border: .5px solid #d3d4da;
     	border-radius: 32px;
