@@ -1,7 +1,7 @@
 <template>
 	<div class="m-playlist">
-		<nav data-v-c735de7a="" data-v-7d459965="" class="nav_back">
-			<i data-v-c735de7a="" class="iconfont icon-huitui"></i>
+		<nav class="nav_back">
+			<i class="iconfont icon-huitui" @click="toback"></i>
 		</nav>
 		<div>
 			<section class="u-plhead">
@@ -9,7 +9,7 @@
 				<div class="plhead_wrap">
 					<div class="plhead_fl">
 						<img class="u-img" :src="Plist.coverImgUrl">
-						<span class="lsthd_icon">歌单</span><i class="u-earp lsthd_num">{{this.numberFormat(Plist.playCount)}}</i>
+						<span class="lsthd_icon">歌单</span><i class="u-earp lsthd_num">{{this.numberFormat(this.playCount)}}</i>
 					</div>
 					<div class="plhead_fr">
 						<h2 class="lsthd_title f-thide">{{Plist.name}}</h2>
@@ -64,6 +64,7 @@
 			return {
 				Plist: [],
 				bgimg:'',
+				playCount:'',
 				avatarUrl:'',
 				nickname:'',
 			};
@@ -78,11 +79,12 @@
 		mounted() {
 			this.$axios.get("/api/playlist/detail?", {
 				params: {
-					id: '5142913200',
+					id: '5066163208',
 				}
 			}).then((res) => {
 				if (res.status == 200 && res.statusText === "OK") {
 					this.Plist = res.data.playlist;
+					this.playCount=this.Plist.playCount;
 					console.log(this.Plist);
 					this.avatarUrl=this.Plist.creator.avatarUrl;
 					this.nickname=this.Plist.creator.nickname;
@@ -92,9 +94,10 @@
 		},
 
 		methods: {
+			toback(){
+				this.$router.back();
+			},
 			introArrow(){
-				// var a=document.getElementsByClassName("pretil")[0].style.display;
-				// console.log(document.getElementsByClassName("pretil")[0].style.display)
 				if(document.getElementsByClassName("pretil")[0].style.display=="block"){
 					document.getElementsByClassName("pretil")[0].style.display=""
 				}else{
@@ -214,6 +217,7 @@
 		padding-left: 15px;
 		color: #fff;
 		font-size: 12px;
+		font-style: normal;
 		background-position: 0;
 		background-repeat: no-repeat;
 		background-size: 11px 10px;
@@ -276,7 +280,7 @@
 		bottom: 0;
 		width: 12px;
 		height: 12px;
-		background-image: url(//s3.music.126.net/mobile-new/img/usericn_2x.png?6423c06…=);
+		background-image: url(../../../public/img/usericn_2x.png);
 		background-repeat: no-repeat;
 		background-size: 75px auto;
 	}

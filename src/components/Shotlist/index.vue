@@ -2,7 +2,7 @@
 	<section class="s-hotlist" v-if="isloading">
 		<h3 class="title" id="gg">热门搜索</h3>
 		<ul class="list">
-			<li class="hotitem" v-for="hot in hotlist" :key="hot.first" ><a class="link" href="javascript:void(0);">{{hot.first}}</a></li>
+			<li class="hotitem" v-for="(hot,index) in hotlist" :key="index" @click="ontouchEnd(index)"><a class="link" href="javascript:void(0);">{{hot.first}}</a></li>
 		</ul>
 	</section>
 </template>
@@ -46,12 +46,9 @@
 		},
 
 		methods: {
-			
-			tosearch(){
-				// for(itm in this.hotitems.length){
-				// 	console.log(this.hotlist[itm]);
-				// }
-				console.log("嘿嘿");
+			ontouchEnd(inx){
+				var text= document.getElementsByClassName("link")[inx].innerHTML;
+				this.$emit("ontouchtochange",text);
 			}
 		},
 

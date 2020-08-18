@@ -1,13 +1,13 @@
 <template>
 	<div class="songlist">
 		<Loading v-if="isloading"/>
-		<a class="m-sgitem" v-for="song in songlist" :key="song.id" href="//music.163.com/m/song?id=1467189463">
+		<a class="m-sgitem" v-for="(song,index) in songlist" :key="index" href="//music.163.com/m/song?id=1467189463">
 			<div class="sgfr ">
 				<div class="sgchfl">
 					<div class="f-thide sgtl">{{song.name}}<span class="sgalia">{{song.alias[0]}}</span></div>
 					<div class="f-thide sginfo">
             <i class="iconfont icon-sq" v-show="!song.fee==0"></i>
-            <span v-for="anm in song.artists" :key="anm.id">{{anm.name}}/</span> - {{song.album.name}}
+            <span v-for="(anm,index) in song.artists" :key="index">{{anm.name}}/</span> - {{song.album.name}}
           </div>
 				</div>
 				<div class="sgchfr"><i class="iconfont icon-start"></i></div>

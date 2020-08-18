@@ -5,15 +5,14 @@
 			<form class="m-input" action="javascript:void 0" method="get">
 				<div class="inputcover">
 					<i class="iconfont icon-sousuo seaico sousuo"></i>
-					<input name="search" class="input" type="search" placeholder="搜索歌曲、歌手、专辑" v-model="inputText" value=""
+					<input name="search" class="input" type="search" @focus="onfocus" placeholder="搜索歌曲、歌手、专辑" v-model="inputText" value=""
 					 autocomplete="off" @keyup.13="tapToSearch">
 					<i class="iconfont icon-guanbi seaico close"></i>
 				</div>
 			</form>
-			<Shotlist v-show="showhot" />
-			<Srecom v-show="showrec" :intext="inputText" />
-			<Songlist v-show="showlis" :intext="inputText" />
-			<Playlist/>
+			<Shotlist v-show="showhot" @ontouchtochange="ontouchtosearch($event)"/>
+			<Srecom v-show="showrec" :intext="inputText" @ontouchtochange="ontouchtosearch($event)"/>
+			<Songlist v-show="showlis" :intext="intText" />
 		</div>
 	</div>
 </template>
@@ -23,7 +22,7 @@
 	import Shotlist from "@/components/Shotlist";
 	import Srecom from "@/components/Srecom";
 	import Songlist from "@/components/Songlist";
-	import Playlist from "@/components/Playlist";
+	// import Playlist from "@/components/Playlist";
 	export default {
 		name: 'Search',
 		props: [''],
@@ -32,12 +31,15 @@
 				showhot:true,
 				showrec:false,
 				showlis:false,
-				inputText:''
+				inputText:'',
+				intText:'',
+				ishow:false
+
 			};
 		},
 
 		components: {
-			Navbar,Shotlist,Srecom,Songlist,Playlist
+			Navbar,Shotlist,Srecom,Songlist
 		},
 
 		computed: {},
@@ -53,10 +55,26 @@
 				this.inputText='';
 			},
 			tapToSearch(){
-      		this.showhot=false;
+      	this.showhot=false;
+				this.showrec=false;
+				this.showlis=true;
+				this.intText=this.inputText;
+				document.activeElement.blur();  
+			},
+			onfocus(){
+				this.showlis=false;
+				if(this.inputText==""){
+					this.showhot=true;
 					this.showrec=false;
-					this.showlis=true;
-					document.activeElement.blur();  
+				}else{
+					this.showhot=false;
+					this.showrec=true;
+				}
+			},
+			ontouchtosearch(value){
+				this.inputText=value;
+				this.tapToSearch();
+				this.ishow=true;
 			}
 		
 		},
@@ -69,9 +87,11 @@
 					this.showlis=false;
 					document.getElementsByClassName("close")[0].style.display="none"
 				}else{
-					this.showhot=false;
-					this.showrec=true;
-					this.showlis=false;
+					if(!this.ishow){
+						this.showhot=false;
+						this.showrec=true;
+						this.showlis=false;
+					}
 					document.getElementsByClassName("close")[0].style.display="block"
 				}
 			}

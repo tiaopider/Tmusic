@@ -3,7 +3,7 @@
 		<h3 class="title">搜索“{{this.intext}}”</h3>
 		<Loading v-if="isloading"/>
 		<ul>
-			<li class="recomitem" v-for="rec in recomlist" :key="rec.keyword">
+			<li class="recomitem" v-for="(rec,index) in recomlist" :key="index" @click="ontouchEnd(index)">
 				<i class="iconfont icon-sousuo"></i><span class="s-thide">{{rec.keyword}}</span>
 			</li>
 		</ul>
@@ -32,11 +32,18 @@
 
 		},
 
-		methods: {},
+		methods: {
+			ontouchEnd(inx){
+				var text= document.getElementsByClassName("s-thide")[inx].innerHTML;
+				this.$emit("ontouchtochange",text);
+			}
+		},
 
 		watch: {
 			intext(value) {
 				if (!value == "") {
+					this.recomlist="";
+					this.isloading=true;
 					this.$axios.get('/api/search/suggest', {
 						params: {
 							keywords: value,
