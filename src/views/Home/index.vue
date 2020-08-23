@@ -5,7 +5,7 @@
 			<h2 class="remd_tl">推荐歌单</h2>
 				<Loading v-if="isloading1"/>
 				<div class="remd_ul clearfix">
-					<a class="remd_li" v-for="list in playlists" :key="list.id" href="//y.music.163.com/m/playlist?id=924680166">
+					<a class="remd_li" v-for="list in playlists" :key="list.id" @click="listpage(list.id)">
 						<div class="remd_img"><img :src="list.picUrl" class="u-img"><span class="u-earp remd_lnum">{{numberFormat(list.playCount)}}</span></div>
 						<p class="remd_text">{{list.name}}</p>
 					</a>
@@ -13,12 +13,13 @@
 			<h2 class="remd_tl">最新音乐</h2>
 			<Loading v-if="isloading2"/>
 			<div class="songlist">
-				<a class="m-sgitem" v-for="song in songlist" :key="song.id" href="//music.163.com/m/song?id=1467189463">
-					<div class="sgfr ">
+				<a class="m-sgitem" v-for="(song,index) in songlist" :key="song.id" @click="songpage(song.id)">
+					<div class="sgfl"><i>{{index+1}}</i></div>
+					<div class="sgfr">
 						<div class="sgchfl">
 							<div class="f-thide sgtl">{{song.name}}<span class="sgalia">{{song.song.alias[0]}}</span></div>
 							<div class="f-thide sginfo">
-  		          <i class="iconfont icon-sq"></i>
+  		          <!-- <i class="iconfont icon-sq" v-show="song.song.exclusive"></i> -->
   		          <span v-for="anm in song.song.artists" :key="anm.id">{{anm.name}}/</span> - {{song.song.album.name}}
   		        </div>
 						</div>
@@ -27,11 +28,14 @@
 				</a>
 			</div>
 		</div>
+		<Playlist v-show="ishow1" :pid="playid" @toback="isfalse1($event)"/>
+		<!-- <Playlist v-show="ishow2" :pid="songid" @toback="isfalse2($event)"/> -->
 	</div>
 </template>
 
 <script>
 	import Navbar from "@/components/Navbar";
+	import Playlist from "@/components/Playlist";
 	
 	export default {
 		name: 'Home',
@@ -41,12 +45,16 @@
 				isloading1:true,
 				isloading2:true,
 				playlists: [],
-				songlist: []
+				songlist: [],
+				ishow1:false,
+				ishow2:false,
+				playid:'',
+				songid:''
 			};
 		},
 
 		components: {
-			Navbar
+			Navbar,Playlist
 		},
 
 		computed: {},
@@ -92,6 +100,20 @@
 					param.unit = sizes[i];
 				}
 				return param.value + param.unit;
+			},
+			listpage(id){
+				this.playid=id;
+				this.ishow1=true;
+			},
+			songpage(id){
+				this.songid=id;
+				this.ishow2=true;
+			},
+			isfalse1(value){
+				this.ishow1=value;
+			},
+			isfalse2(value){
+				this.ishow2=value;
 			}
 		},
 
@@ -196,12 +218,32 @@
     position: relative;
     min-height: 20px;
 }
-.m-sgitem{
-  display: inline-block;
-  padding-left: 10px;
-	width: 100vw;
-  box-sizing: border-box;
-}
+	.m-sgitem {
+		display: flex;
+		padding-left: 10px;
+		width: 100vw;
+		box-sizing: border-box;
+	}
+
+	.m-sgitem .sgfl {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 40px;
+		font-size: 17px;
+		color: #999;
+		margin-left: -10px;
+	}
+	.m-sgitem .sgfl i{
+		display: inline-block;
+		border-radius: 25px;
+		width: 25px;
+		height: 25px;
+		text-align: center;
+		line-height: 25px;
+		font-style: normal;
+		background-color: #ebf0f2;
+	}
 .m-sgitem .sgfr{
   display: flex;
   justify-content: space-between;
@@ -211,6 +253,7 @@
 }
 .m-sgitem .sgchfl {
     padding: 6px 0;
+		width: 75vw;
 }
 .f-thide {
     overflow: hidden;
@@ -244,6 +287,7 @@
 }
 .m-sgitem .sgchfr i {
     font-size: 25px;
+    color: #ff6700;
 }
 
 

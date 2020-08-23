@@ -26,15 +26,6 @@
 		beforeMount() {},
 
 		mounted() {
-			// this.$emit('success',false);
-
-
-			// document.getElementsByClassName("hotitem")[0].addEventListener("touchend",this.tosearch);
-			// this.hotitems=document.getElementsByClassName("hotitem");
-			// for(itm in this.hotitems.length){
-			// 		this.hotitems[itm].touched(this.tapToSearch(itm));
-			// 	}
-
 			this.$axios.get("/api/search/hot", {
 				params: {}
 			}).then((res) => {

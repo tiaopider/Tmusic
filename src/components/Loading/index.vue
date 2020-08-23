@@ -16,13 +16,13 @@
 
 <style scoped>
 	.loader {
-		/* position: absolute;
+		position: absolute;
 		left: 50%;
-		top: 50%; */
+		top: 40%;
     display: block;
 		height: 2.5rem;
 		width: 1.5rem;
-		margin: 0 auto 8px;
+		margin-left: -0.75rem;
 	}
 
 	.object {
