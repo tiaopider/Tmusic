@@ -48,8 +48,8 @@
           <a
             class="m-sgitem"
             v-for="(pl,index) in Plist.tracks"
-            :key="pl.id"
-            href="//music.163.com/m/song?id=1459922004"
+            :key="pl.id" 
+            @click="songpage(pl.id)"
           >
             <div class="sgfl">{{index+1}}</div>
             <div class="sgfr">
@@ -100,6 +100,9 @@ export default {
       // this.$router.back();
       this.$emit("toback", false);
     },
+    songpage(id){
+			this.$store.commit('saveSongUrlId',id)
+		},
     introArrow() {
       if (
         document.getElementsByClassName("pretil")[0].style.display == "block"
@@ -143,13 +146,11 @@ export default {
             this.Plist = res.data.playlist;
             this.playCount = this.Plist.playCount;
             this.isloading = false;
-						console.log(this.Plist.description);
+						// console.log(this.Plist.description);
             this.avatarUrl = this.Plist.creator.avatarUrl;
             this.nickname = this.Plist.creator.nickname;
 						this.bgimg = "background-image:url(" + this.Plist.coverImgUrl + ")";
 						this.thepre=this.Plist.description.split("\n")
-						
-						console.log(this.thepre);
           }
         });
     },

@@ -1,7 +1,7 @@
 <template>
 	<div class="songlist">
 		<Loading v-if="isloading" />
-		<a class="m-sgitem" v-for="(song,index) in songlist" :key="index" href="//music.163.com/m/song?id=1467189463">
+		<a class="m-sgitem" v-for="(song,index) in songlist" :key="index"  @click="songpage(song.id)">
 			<div class="sgfr ">
 				<div class="sgchfl">
 					<div class="f-thide sgtl">{{song.name}}<span class="sgalia">{{song.alias[0]}}</span></div>
@@ -38,7 +38,11 @@
 
 		},
 
-		methods: {},
+		methods: {
+			songpage(id){
+				this.$store.commit('saveSongUrlId',id)
+			}
+		},
 
 		watch: {
 			intext(value) {

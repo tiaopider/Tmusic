@@ -62,6 +62,7 @@
 		beforeMount() {},
 
 		mounted() {
+			window.addEventListener('load', this.loadInit)
 			this.$axios.get('/api/personalized', {
 				params: {
 					limit: 6
@@ -78,9 +79,10 @@
 			}).then((res) => {
 				if (res.status == 200 && res.statusText === "OK") {
 					this.songlist = res.data.result;
+					this.$store.commit('saveSongUrlId',this.songlist[0].id)
 					this.isloading2=false;
 				}
-    	})
+			})
 		},
 
 		methods: {
@@ -106,8 +108,9 @@
 				this.ishow1=true;
 			},
 			songpage(id){
-				this.songid=id;
-				this.ishow2=true;
+				// this.songid=id;
+				// this.ishow2=true;
+				 this.$store.commit('saveSongUrlId',id)
 			},
 			isfalse1(value){
 				this.ishow1=value;

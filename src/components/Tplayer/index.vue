@@ -3,11 +3,10 @@
 		<div class="pic">
 			<img src="/img/04de313fdd7f3835563d3c4bdfb980735556062.jpg" alt="">
 		</div>
-		<audio src="/libs/少年.mp3" id="myMusic"></audio>
+		<audio autoplay src="/libs/少年.mp3" id="myMusic"></audio>
 		<div class="musicInfo">
 			<div class="aplayer-music">
-				<span class="aplayer-title">少年</span> -
-				<span class="aplayer-author">梦然</span>
+				<span class="aplayer-title">少年 - 梦然</span>
 			</div>
 			<div class="jingdu">
 				<div id="aplayer-bar">
@@ -34,7 +33,7 @@
 		props: [''],
 		data() {
 			return {
-				mark: true,
+				mark: false,
 				alltime: 0,
 				nowtime: 0,
 				song_id: 0,
@@ -55,7 +54,14 @@
 
 		components: {},
 
-		computed: {},
+		computed: {
+			getid() {
+				return this.$store.state.songUrlId;
+			},
+			pState(){
+				return this.audio.paused
+			}
+		},
 
 		beforeMount() {},
 
@@ -76,6 +82,9 @@
 			window.addEventListener('load', this.audioInit)
 			this.aplayer_bar.addEventListener('click', this.aplayer_bar_click, false);
 			this.play_stop.addEventListener('click', this.play_stop_click, false);
+			// this.prev.addEventListener('click', this.prev_song_click, false);
+			// this.next.addEventListener('click', this.next_song_click, false);
+			// this.list.addEventListener('click', this.list_click, false);
 			document.getElementById("myMusic").addEventListener('timeupdate', this.audio_timeupdate);
 		},
 
@@ -92,10 +101,10 @@
 				var n = (pageX - aplayer_bar_Left) / this.aplayer_bar.offsetWidth;
 				//获取歌曲的总时间
 				var audio_duration = this.audio.duration;
-				
+
 				// 根据进度条的百分比改变音频的播放时间  
 				// 公式 = 鼠标点击的位置到div最左边的位置宽度/div的总宽度*音频的总时间
-				
+
 				this.audio.currentTime = n * this.alltime;
 
 				// //获取音频播放的时间
@@ -123,10 +132,13 @@
 
 
 			prev_song_click() {
-
+				alert("还没写")
 			},
 			next_song_click() {
-
+				alert("还没写")
+			},
+			list_click(){
+				alert("还没写")
 			},
 			audio_timeupdate() {
 				//获取音频的总时间 以秒为单位
@@ -166,18 +178,7 @@
 				//将进度条的宽度初始化为0 红色的
 				this.aplayer_played.style.width = 0 + 'px';
 				this.aplayer_thumb.style.left = -3 + 'px';
-				this.$axios.get('/api/song/url', {
-					params: {
-						id: 1325905146
-					}
-				}).then((res) => {
-					if (res.status == 200 && res.statusText === "OK") {
-						// console.log(res);
-						//获取当前歌曲的路径
-						this.audio.src = res.data.data[0].url;
-						this.song_id = res.data.data[0].id;
-					}
-				})
+				////////////////////////////////////////////////
 				// //获取歌曲的一个总时间
 				// if (!isNaN(audio.duration)) {
 				// 	time_all.innerHTML = format(audio.duration);
@@ -185,22 +186,7 @@
 				// 	time_all.innerHTML = '00:00'
 				// }
 				// console.log(parseInt(this.song_id));
-				this.$axios.get('/api/song/detail', {
-					params: {
-						ids: 1325905146
-					}
-				}).then((res2) => {
-					if (res2.status == 200 && res2.statusText === "OK") {
-						// console.log(res2);
-
-						//获取当前歌曲的pic
-						this.img.src = res2.data.songs[0].al.picUrl;
-						//获取当前歌曲的名称
-						this.aplayer_title.innerHTML = res2.data.songs[0].al.name;
-						//获取当前歌曲的演唱者
-						this.aplayer_author.innerHTML = res2.data.songs[0].ar[0].name;
-					}
-				})
+				//////////////////////////////////////////////////
 
 				// //歌词解析
 				// this.lyric_str();
@@ -229,7 +215,34 @@
 
 		},
 
-		watch: {}
+		watch: {
+			getid(value) {
+				this.mark = false;
+				document.getElementById("play").className = "iconfont icon-stop";
+				this.$axios.get('/api/song/url', {
+					params: {
+						id: value
+					}
+				}).then((res) => {
+					if (res.status == 200 && res.statusText === "OK") {
+						//获取当前歌曲的路径
+						this.audio.src = res.data.data[0].url;
+					}
+				});
+				this.$axios.get('/api/song/detail', {
+					params: {
+						ids: value
+					}
+				}).then((res2) => {
+					if (res2.status == 200 && res2.statusText === "OK") {
+						//获取当前歌曲的pic
+						this.img.src = res2.data.songs[0].al.picUrl;
+						//获取当前歌曲的名称,作者
+						this.aplayer_title.innerHTML = `${res2.data.songs[0].al.name} - ${res2.data.songs[0].ar[0].name}`;
+					}
+				})
+			}
+		}
 
 	}
 </script>
@@ -264,6 +277,26 @@
 
 	#tplayer .aplayer-music {
 		margin-left: 10px;
+		max-width: 40vw;
+		overflow: hidden;
+	}
+
+	#tplayer .aplayer-title {
+		display: inline-block;
+		height: 1.4rem;
+		white-space: nowrap;
+		margin-left: 10px;
+		animation: tit 3s linear infinite;
+	}
+
+	@keyframes tit {
+		0% {
+			margin-left: 0
+		}
+
+		100% {
+			margin-left: -10px
+		}
 	}
 
 	#tplayer .musicInfo {
